@@ -15,39 +15,37 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let test1 = UserInput(email: "Zoe@gmail.com", password: "12345678")
-        let (user, error) = register(input: test1)
-        if (error != nil) {
-            print("User register unsuccessfully: \(error!)")
+        let registrationResult = register(input: test1)
+        switch registrationResult {
+            
+        case .success(let user):
+            print("user: \(user) successfully registered")
+            
+        case .failure(let error):
+            print("failed to register new user. Error: \(error)")
         }
-        else {
-            print("user: \(String(describing: user!))")
-        }
-//        guard let err = error else {
-//            print("User register unsuccessfully: \(err)")
-//            return
-//        }
-//        print("user: \(String(describing: user))")
     }
     
-    func register(input: UserInput) -> (User?, UserError?) {
+    func register(input: UserInput) -> Result<User, UserError> {
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
+        
         guard emailPredicate.evaluate(with: input.email) else {
-            return (nil, UserError.invalidEmail)
+            return .failure(UserError.invalidEmail)
         }
         
         guard input.password.count > 6 else {
-            return (nil, UserError.invalidPassword)
+            return .failure(UserError.invalidPassword)
         }
         
         do {
             let user = try db.saveToDb(input)
-            return (user, nil)
+            return .success(user)
         }
         catch Database.DbError.duplicateKeyError {
-            return (nil, UserError.alreadyExist)
+            return .failure(UserError.alreadyExist)
         }
         catch {
-            return (nil, UserError.unknown(cause: error))
+            return .failure(UserError.unknown(cause: error))
         }
     }
 
