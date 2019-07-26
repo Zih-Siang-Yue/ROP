@@ -18,37 +18,41 @@ class ViewController: UIViewController {
         let registrationResult = register(input: test1)
         switch registrationResult {
             
-        case .success(let user):
+        case .ok(let user):
             print("user: \(user) successfully registered")
             
-        case .failure(let error):
+        case .error(let error):
             print("failed to register new user. Error: \(error)")
         }
     }
     
     func register(input: UserInput) -> Result<User, UserError> {
-        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
-        
-        guard emailPredicate.evaluate(with: input.email) else {
-            return .failure(UserError.invalidEmail)
-        }
-        
-        guard input.password.count > 6 else {
-            return .failure(UserError.invalidPassword)
-        }
-        
+        return validateEmail(input)
+            .bind(validatePassword)
+            .bind(saveToDbWithResult)
+    }
+    
+    private func saveToDbWithResult(input: UserInput) -> Result<User, UserError> {
         do {
-            let user = try db.saveToDb(input)
-            return .success(user)
+            let user = try self.db.saveToDb(input)
+            return .ok(user)
         }
         catch Database.DbError.duplicateKeyError {
-            return .failure(UserError.alreadyExist)
+            return .error(UserError.alreadyExist)
         }
         catch {
-            return .failure(UserError.unknown(cause: error))
+            return .error(UserError.unknown(cause: error))
         }
     }
+    
+    //MARK: validate
+    private func validateEmail(_ input: UserInput) -> Result<UserInput, UserError> {
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}")
+        return emailPredicate.evaluate(with: input.email) ? .ok(input) : .error(UserError.invalidEmail)
+    }
 
+    private func validatePassword(_ input: UserInput) -> Result<UserInput, UserError> {
+        return input.password.count > 6 ? .ok(input) : .error(UserError.invalidPassword)
+    }
 
 }
-

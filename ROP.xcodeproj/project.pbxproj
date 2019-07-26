@@ -14,6 +14,7 @@
 		F0F902BA22E9568400DB6DA2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0F902B822E9568400DB6DA2 /* LaunchScreen.storyboard */; };
 		F0F902C222E979ED00DB6DA2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F902C122E979ED00DB6DA2 /* User.swift */; };
 		F0F902C422E97A7000DB6DA2 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F902C322E97A7000DB6DA2 /* Database.swift */; };
+		F0F902C622E9B0DD00DB6DA2 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F902C522E9B0DD00DB6DA2 /* Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		F0F902BB22E9568400DB6DA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0F902C122E979ED00DB6DA2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F0F902C322E97A7000DB6DA2 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		F0F902C522E9B0DD00DB6DA2 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				F0F902B122E9568300DB6DA2 /* ViewController.swift */,
 				F0F902C122E979ED00DB6DA2 /* User.swift */,
 				F0F902C322E97A7000DB6DA2 /* Database.swift */,
+				F0F902C522E9B0DD00DB6DA2 /* Result.swift */,
 				F0F902B322E9568300DB6DA2 /* Main.storyboard */,
 				F0F902B622E9568400DB6DA2 /* Assets.xcassets */,
 				F0F902B822E9568400DB6DA2 /* LaunchScreen.storyboard */,
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F902B222E9568300DB6DA2 /* ViewController.swift in Sources */,
+				F0F902C622E9B0DD00DB6DA2 /* Result.swift in Sources */,
 				F0F902B022E9568300DB6DA2 /* AppDelegate.swift in Sources */,
 				F0F902C422E97A7000DB6DA2 /* Database.swift in Sources */,
 				F0F902C222E979ED00DB6DA2 /* User.swift in Sources */,
